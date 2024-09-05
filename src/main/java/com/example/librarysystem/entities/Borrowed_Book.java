@@ -5,6 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -12,9 +13,8 @@ public class Borrowed_Book {
     @Id
     @GeneratedValue
     private Long id;
-    private Date borrowDate;
-    private Date toBeReturnedDate;
-    private Date returnDate;
+    private LocalDate borrowDate;
+    private LocalDate toBeReturnedDate;
 
     public void setId(Long id) {
         this.id = id;
@@ -24,28 +24,20 @@ public class Borrowed_Book {
         return id;
     }
 
-    public Date getBorrowDate() {
+    public LocalDate getBorrowDate() {
         return borrowDate;
     }
 
-    public void setBorrowDate(Date borrowDate) {
+    public void setBorrowDate(LocalDate borrowDate) {
         this.borrowDate = borrowDate;
     }
 
-    public Date getToBeReturnedDate() {
+    public LocalDate getToBeReturnedDate() {
         return toBeReturnedDate;
     }
 
-    public void setToBeReturnedDate(Date toBeReturnedDate) {
+    public void setToBeReturnedDate(LocalDate toBeReturnedDate) {
         this.toBeReturnedDate = toBeReturnedDate;
-    }
-
-    public Date getReturnDate() {
-        return returnDate;
-    }
-
-    public void setReturnDate(Date returnDate) {
-        this.returnDate = returnDate;
     }
 
 

@@ -1,7 +1,7 @@
 package com.example.librarysystem.Servlets;
 
-import com.example.librarysystem.common.BookDto;
-import com.example.librarysystem.ejb.BooksBean;
+import com.example.librarysystem.common.Borrowed_BookDto;
+import com.example.librarysystem.ejb.Borrowed_BooksBean;
 import jakarta.inject.Inject;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
@@ -10,18 +10,17 @@ import jakarta.servlet.annotation.*;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(name = "Books", value = "/Books")
-public class Books extends HttpServlet {
+@WebServlet(name = "Borrowed_Books", value = "/Borrowed_Books")
+public class Borrowed_Books extends HttpServlet {
 
     @Inject
-    BooksBean booksBean;
+    Borrowed_BooksBean borrowedBooksBean;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<BookDto> books = booksBean.findAllBooks();
-        request.setAttribute("books",books);
-        request.setAttribute("numberOfBooks",books.size());
-        request.getRequestDispatcher("/WEB-INF/pages/books.jsp").forward(request,response);
+        List<Borrowed_BookDto> borrowedBooks = borrowedBooksBean.findAllBorrowedBooks();
+        request.setAttribute("borrowedBooks",borrowedBooks);
+        request.getRequestDispatcher("/WEB-INF/pages/borrowedbooks.jsp").forward(request,response);
     }
 
     @Override

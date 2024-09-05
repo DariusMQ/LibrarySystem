@@ -5,6 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Date;
 
@@ -18,8 +19,8 @@ public class Book {
     private Long numberOfPages;
     private Long code;
     private Long quantityAvailable;
-    private Date publishingDate;
-    private String Location;
+    private LocalDate publishingDate;
+    private String location;
 
     public void setId(Long id) {
         this.id = id;
@@ -69,23 +70,23 @@ public class Book {
         this.quantityAvailable = quantityAvailable;
     }
 
-    public Date getPublishingDate() {
+    public LocalDate getPublishingDate() {
         return publishingDate;
     }
 
-    public void setPublishingDate(Date publishingDate) {
+    public void setPublishingDate(LocalDate publishingDate) {
         this.publishingDate = publishingDate;
     }
 
     public String getLocation() {
-        return Location;
+        return location;
     }
 
     public void setLocation(String location) {
-        Location = location;
+        location = location;
     }
 
-    @OneToMany(mappedBy = "books")
+    @OneToMany(mappedBy = "book")
     private Collection<Borrowed_Book> borrowedBooks;
 
     public Collection<Borrowed_Book> getBorrowedBooks() {
