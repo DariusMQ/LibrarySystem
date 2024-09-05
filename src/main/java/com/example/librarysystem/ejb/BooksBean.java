@@ -1,11 +1,13 @@
 package com.example.librarysystem.ejb;
 
 import com.example.librarysystem.common.BookDto;
+import com.example.librarysystem.common.Borrowed_BookDto;
 import com.example.librarysystem.entities.Book;
 import com.example.librarysystem.entities.Borrowed_Book;
 import com.example.librarysystem.entities.Returned_Book;
 import jakarta.ejb.EJBException;
 import jakarta.ejb.Stateless;
+import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
@@ -23,6 +25,9 @@ public class BooksBean {
 
     @PersistenceContext
     EntityManager entityManager;
+
+    @Inject
+    Borrowed_BooksBean borrowedBooksBean;
 
     public List<BookDto> findAllBooks() {
         LOG.info("findAllCars");
@@ -125,6 +130,9 @@ public class BooksBean {
 
     public void deleteBook(Long bookId){
         LOG.info("deleteBook");
+
+        List<Borrowed_BookDto> bbooks = borrowedBooksBean.findBorrowedBooksByBookId(bookId);
+        borrowedBooksBean.deleteBorrowedBooks(bbooks);
 
         Book book = entityManager.find(Book.class,bookId);
         entityManager.remove(book);

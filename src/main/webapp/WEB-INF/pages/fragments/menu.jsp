@@ -17,35 +17,43 @@
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav">
 
-                    <li>
-                        <a class="nav-link
+                    <b:if test="${pageContext.request.isUserInRole('READ_BOOKS')}">
+                        <li>
+                            <a class="nav-link
                         ${pageContext.request.requestURI.substring(pageContext.request.requestURI.lastIndexOf
 ("/")) eq '/books.jsp' ? ' active' : ''}" aria-current="page" href="${pageContext.request.contextPath}/Books">
-                            Books</a>
-                    </li>
+                                Books</a>
+                        </li>
+                    </b:if>
 
-                    <li>
-                        <a class="nav-link
+                    <b:if test="${pageContext.request.isUserInRole('READ_USERS')}">
+                        <li>
+                            <a class="nav-link
                         ${pageContext.request.requestURI.substring(pageContext.request.requestURI.lastIndexOf
 ("/")) eq '/users.jsp' ? ' active' : ''}" aria-current="page" href="${pageContext.request.contextPath}/Users">
-                            Users</a>
-                    </li>
+                                Users</a>
+                        </li>
+                    </b:if>
 
-                    <li>
-                        <a class="nav-link
+                    <b:if test="${pageContext.request.isUserInRole('READ_BORROWED_BOOKS')}">
+                        <li>
+                            <a class="nav-link
                         ${pageContext.request.requestURI.substring(pageContext.request.requestURI.lastIndexOf
 ("/")) eq '/borrowedbooks.jsp' ? ' active' : ''}" aria-current="page"
-                           href="${pageContext.request.contextPath}/Borrowed_Books">
-                            Borrowed</a>
-                    </li>
+                               href="${pageContext.request.contextPath}/Borrowed_Books">
+                                Borrowed</a>
+                        </li>
+                    </b:if>
 
-                    <li>
-                        <a class="nav-link
+                    <b:if test="${pageContext.request.isUserInRole('READ_RETURNED_BOOKS')}">
+                        <li>
+                            <a class="nav-link
                         ${pageContext.request.requestURI.substring(pageContext.request.requestURI.lastIndexOf
 ("/")) eq '/returnedbooks.jsp' ? ' active' : ''}" aria-current="page"
-                           href="${pageContext.request.contextPath}/Returned_Books">
-                            Returned</a>
-                    </li>
+                               href="${pageContext.request.contextPath}/Returned_Books">
+                                Returned</a>
+                        </li>
+                    </b:if>
 
                 </ul>
             </div>

@@ -4,8 +4,12 @@
 
 <t:pageTemplate pageTitle="Books">
     <h1>Books</h1>
-    <a class="btn btn-primary btn-lg" href="${pageContext.request.contextPath}/AddBook">
-        Add Book</a>
+
+    <b:if test="${pageContext.request.isUserInRole('WRITE_BOOKS')}">
+        <a class="btn btn-primary btn-lg" href="${pageContext.request.contextPath}/AddBook">
+            Add Book</a>
+    </b:if>
+
     <div class="container text-center">
         <b:forEach var="book" items="${books}">
             <div class="row">
@@ -30,15 +34,21 @@
                 <div class="col">
                         ${book.location}
                 </div>
-                <div class="col">
-                    <a class="btn btn-secondary" href="${pageContext.request.contextPath}/EditBook?id=${book.id}">
-                        Edit Book</a>
-                </div>
-                <div class="col">
-                    <form method="POST" action="${pageContext.request.contextPath}/Books">
-                        <button class="btn btn-danger" type="submit" name="deleteThis" value="${book.id}"> Delete Book </button>
-                    </form>
-                </div>
+
+                <b:if test="${pageContext.request.isUserInRole('WRITE_BOOKS')}">
+                    <div class="col">
+                        <a class="btn btn-secondary" href="${pageContext.request.contextPath}/EditBook?id=${book.id}">
+                            Edit Book</a>
+                    </div>
+                    <div class="col">
+                        <form method="POST" action="${pageContext.request.contextPath}/Books">
+                            <button class="btn btn-danger" type="submit" name="deleteThis" value="${book.id}"> Delete
+                                Book
+                            </button>
+                        </form>
+                    </div>
+                </b:if>
+
             </div>
         </b:forEach>
     </div>

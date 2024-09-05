@@ -2,6 +2,7 @@ package com.example.librarysystem.Servlets;
 
 import com.example.librarysystem.common.BookDto;
 import com.example.librarysystem.ejb.BooksBean;
+import jakarta.annotation.security.DeclareRoles;
 import jakarta.inject.Inject;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
@@ -10,6 +11,10 @@ import jakarta.servlet.annotation.*;
 import java.io.IOException;
 import java.util.List;
 
+@DeclareRoles({"READ_BOOKS","WRITE_BOOKS"})
+@ServletSecurity(value = @HttpConstraint(rolesAllowed = {"READ_BOOKS"}),
+        httpMethodConstraints = {@HttpMethodConstraint(value = "POST", rolesAllowed =
+                {"WRITE_BOOKS"})})
 @WebServlet(name = "Books", value = "/Books")
 public class Books extends HttpServlet {
 

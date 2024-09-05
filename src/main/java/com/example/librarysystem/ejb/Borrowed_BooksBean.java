@@ -54,4 +54,24 @@ public class Borrowed_BooksBean {
         return Borrowed_BookDtos;
     }
 
+    public List<Borrowed_BookDto> findBorrowedBooksByBookId(Long bookId){
+        try{
+            TypedQuery<Borrowed_Book> typedQuery = entityManager.createQuery("SELECT bb FROM Borrowed_Book bb WHERE bb.book.id = "+bookId, Borrowed_Book.class);
+
+            List<Borrowed_Book> bbooks = typedQuery.getResultList();
+            return copyBorrowedBooksToDto(bbooks);
+        }
+
+        catch (Exception ex) {
+            throw new EJBException(ex);
+        }
+
+    }
+
+    public void deleteBorrowedBooks(List<Borrowed_BookDto> bbooks){
+        for(Borrowed_BookDto bbook: bbooks){
+            Borrowed_Book book = entityManager.find(Borrowed_Book.class,bbook.getId());
+            entityManager.remove(book);
+        }
+    }
 }
