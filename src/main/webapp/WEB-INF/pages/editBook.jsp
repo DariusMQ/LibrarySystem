@@ -2,8 +2,8 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@taglib prefix="b" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<t:pageTemplate pageTitle="Edit Car">
-    <h1>Edit Car</h1>
+<t:pageTemplate pageTitle="Edit Book">
+    <h1>Edit Book</h1>
     <form class="needs-validation" novalidate method="POST" action="${pageContext.request.contextPath}/EditBook">
 
         <div class="row">

@@ -1,5 +1,6 @@
 package com.example.librarysystem.ejb;
 
+import com.example.librarysystem.common.BookDto;
 import com.example.librarysystem.common.UserDto;
 import com.example.librarysystem.entities.*;
 import jakarta.ejb.EJBException;
@@ -90,4 +91,45 @@ public class UsersBean {
         }
     }
 
+    private void removeGroupsFromUser(String username){
+        LOG.info("removeGroupsFromUser");
+
+        try{
+            TypedQuery<UserGroup> typedQuery = entityManager.createQuery("SELECT ug FROM UserGroup ug",UserGroup.class);
+
+            List<UserGroup> userGroups = typedQuery.getResultList();
+            for (UserGroup userGroup: userGroups){
+                if(userGroup.getUsername().equals(username))
+                entityManager.remove(userGroup);
+            }
+        }
+        catch (Exception ex){
+            throw new EJBException(ex);
+        }
+    }
+
+    public UserDto findUserById(Long userId){
+        for(UserDto userDto: findAllUsers()){
+            if(userId.equals(userDto.getId())){
+                return userDto;
+            }
+        }
+        return null;
+    }
+
+    public void updateUser(Long userId,
+                           String username,
+                           String email,
+                           String password,
+                           Collection<String> groups){
+        LOG.info("updateUser");
+
+        User user = entityManager.find(User.class,userId);
+        user.setUsername(username);
+        user.setEmail(email);
+        if(!password.isBlank())
+        user.setPassword(passwordBean.convertToSha256(password));
+        removeGroupsFromUser(user.getUsername());
+        assignGroupsToUser(user.getUsername(),groups);
+    }
 }
