@@ -10,6 +10,7 @@
         <class>com.example.librarysystem.entities.User</class>
         <class>com.example.librarysystem.entities.Borrowed_Book</class>
         <class>com.example.librarysystem.entities.Returned_Book</class>
+        <class>com.example.librarysystem.entities.UserGroup</class>
 
         <properties>
             <property name="jakarta.persistence.schema-generation.database.action" value="create-or-extend-tables" />
