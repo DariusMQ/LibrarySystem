@@ -5,5 +5,8 @@
              version="3.0">
     <persistence-unit name="default">
 
+        <class>com.example.librarysystem.entities.Book</class>
+        <class>com.example.librarysystem.entities.User</class>
+        <class>com.example.librarysystem.entities.Borrowed_Book</class>
     </persistence-unit>
 </persistence>
