@@ -43,6 +43,6 @@ public class BorrowBook extends HttpServlet {
 
         borrowedBooksBean.borrowBook(bookId,borrowerId,toBeReturnedDate);
 
-        response.sendRedirect(request.getContextPath()+"/Borrowed_Books");
+        response.sendRedirect(request.getContextPath()+"/Books");
     }
 }

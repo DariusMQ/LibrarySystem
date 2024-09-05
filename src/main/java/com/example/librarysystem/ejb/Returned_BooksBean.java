@@ -89,4 +89,25 @@ public class Returned_BooksBean {
         entityManager.remove(borrowed_Book);
     }
 
+    public List<Returned_BookDto> findReturnedBooksByBookId(Long bookId){
+        try{
+            TypedQuery<Returned_Book> typedQuery = entityManager.createQuery("SELECT rb FROM Returned_Book rb WHERE rb.book.id = "+bookId, Returned_Book.class);
+
+            List<Returned_Book> rbooks = typedQuery.getResultList();
+            return copyReturnedBooksToDto(rbooks);
+        }
+
+        catch (Exception ex) {
+            throw new EJBException(ex);
+        }
+
+    }
+
+    public void deleteReturnedBooks(List<Returned_BookDto> rbooks){
+        for(Returned_BookDto rbook: rbooks){
+            Returned_Book book = entityManager.find(Returned_Book.class,rbook.getId());
+            entityManager.remove(book);
+        }
+    }
+
 }

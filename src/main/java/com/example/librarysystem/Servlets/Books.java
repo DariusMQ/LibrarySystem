@@ -12,8 +12,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@DeclareRoles({"WRITE_BOOKS"})
-@ServletSecurity(value = @HttpConstraint(rolesAllowed = {"READ_BOOKS"}),
+@DeclareRoles({"READ_BOOKS","WRITE_BOOKS"})
+@ServletSecurity(value = @HttpConstraint(rolesAllowed = {}),
         httpMethodConstraints = {@HttpMethodConstraint(value = "POST", rolesAllowed =
                 {"WRITE_BOOKS"})})
 @WebServlet(name = "Books", value = "/Books")

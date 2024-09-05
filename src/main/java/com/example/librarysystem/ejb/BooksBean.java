@@ -3,6 +3,7 @@ package com.example.librarysystem.ejb;
 import com.example.librarysystem.common.BookDto;
 import com.example.librarysystem.common.BookPhotoDto;
 import com.example.librarysystem.common.Borrowed_BookDto;
+import com.example.librarysystem.common.Returned_BookDto;
 import com.example.librarysystem.entities.Book;
 import com.example.librarysystem.entities.BookPhoto;
 import com.example.librarysystem.entities.Borrowed_Book;
@@ -28,6 +29,8 @@ public class BooksBean {
     @PersistenceContext
     EntityManager entityManager;
 
+    @Inject
+    Returned_BooksBean returnedBooksBean;
     @Inject
     Borrowed_BooksBean borrowedBooksBean;
 
@@ -134,6 +137,9 @@ public class BooksBean {
 
         List<Borrowed_BookDto> bbooks = borrowedBooksBean.findBorrowedBooksByBookId(bookId);
         borrowedBooksBean.deleteBorrowedBooks(bbooks);
+
+        List<Returned_BookDto> rbooks = returnedBooksBean.findReturnedBooksByBookId(bookId);
+        returnedBooksBean.deleteReturnedBooks(rbooks);
 
         Book book = entityManager.find(Book.class,bookId);
         entityManager.remove(book);
