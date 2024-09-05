@@ -1,9 +1,6 @@
 package com.example.librarysystem.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.util.Collection;
@@ -106,5 +103,16 @@ public class Book {
 
     public void setReturnedBooks(Collection<Returned_Book> returnedBooks) {
         this.returnedBooks = returnedBooks;
+    }
+
+    @OneToOne(mappedBy = "book", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private BookPhoto photo;
+
+    public BookPhoto getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(BookPhoto photo) {
+        this.photo = photo;
     }
 }

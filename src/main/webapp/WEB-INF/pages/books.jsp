@@ -34,8 +34,15 @@
                 <div class="col">
                         ${book.location}
                 </div>
+                <div class="col">
+                    <img src="${pageContext.request.contextPath}/BookPhotos?id=${book.id}" width="48"/>
+                </div>
 
                 <b:if test="${pageContext.request.isUserInRole('WRITE_BOOKS')}">
+                    <div class="col">
+                        <a class="btn btn-secondary"
+                           href="${pageContext.request.contextPath}/AddBookPhoto?id=${book.id}" role="button">Add Photo</a>
+                    </div>
                     <div class="col">
                         <a class="btn btn-secondary" href="${pageContext.request.contextPath}/EditBook?id=${book.id}">
                             Edit Book</a>

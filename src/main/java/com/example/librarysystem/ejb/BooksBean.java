@@ -1,8 +1,10 @@
 package com.example.librarysystem.ejb;
 
 import com.example.librarysystem.common.BookDto;
+import com.example.librarysystem.common.BookPhotoDto;
 import com.example.librarysystem.common.Borrowed_BookDto;
 import com.example.librarysystem.entities.Book;
+import com.example.librarysystem.entities.BookPhoto;
 import com.example.librarysystem.entities.Borrowed_Book;
 import com.example.librarysystem.entities.Returned_Book;
 import jakarta.ejb.EJBException;
@@ -136,5 +138,32 @@ public class BooksBean {
 
         Book book = entityManager.find(Book.class,bookId);
         entityManager.remove(book);
+    }
+
+    public void addPhotoToBook(Long bookId, String filename, String fileType, byte[] fileContent) {
+        LOG.info("addPhotoToBook");
+        BookPhoto photo = new BookPhoto();
+        photo.setFilename(filename);
+        photo.setFileType(fileType);
+        photo.setFileContent(fileContent);
+        Book book = entityManager.find(Book.class, bookId);
+        if (book.getPhoto() != null) {
+            entityManager.remove(book.getPhoto());
+        }
+        book.setPhoto(photo);
+        photo.setBook(book);
+        entityManager.persist(photo);
+    }
+    public BookPhotoDto findPhotoByBookId(Integer bookId) {
+        List<BookPhoto> photos = entityManager
+                .createQuery("SELECT p FROM BookPhoto p where p.book.id = :id", BookPhoto.class)
+                .setParameter("id", bookId)
+                .getResultList();
+        if (photos.isEmpty()) {
+            return null;
+        }
+        BookPhoto photo = photos.get(0); // the first element
+        return new BookPhotoDto(photo.getId(), photo.getFilename(), photo.getFileType(),
+                photo.getFileContent());
     }
 }
