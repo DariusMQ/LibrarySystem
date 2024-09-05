@@ -83,7 +83,7 @@ public class Book {
     }
 
     public void setLocation(String location) {
-        location = location;
+        this.location = location;
     }
 
     @OneToMany(mappedBy = "book")

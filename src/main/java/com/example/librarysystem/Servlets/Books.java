@@ -26,6 +26,10 @@ public class Books extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Long bookId = Long.parseLong(request.getParameter("deleteThis"));
 
+        booksBean.deleteBook(bookId);
+
+        response.sendRedirect(request.getContextPath()+"/Books");
     }
 }
