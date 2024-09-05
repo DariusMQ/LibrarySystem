@@ -59,4 +59,15 @@ public class User {
     public void setBorrowedBooks(Collection<Borrowed_Book> borrowedBooks) {
         this.borrowedBooks = borrowedBooks;
     }
+
+    @OneToMany(mappedBy = "borrower")
+    private Collection<Returned_Book> returnedBooks;
+
+    public Collection<Returned_Book> getReturnedBooks() {
+        return returnedBooks;
+    }
+
+    public void setReturnedBooks(Collection<Returned_Book> returnedBooks) {
+        this.returnedBooks = returnedBooks;
+    }
 }

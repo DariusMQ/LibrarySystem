@@ -96,4 +96,15 @@ public class Book {
     public void setBorrowedBooks(Collection<Borrowed_Book> borrowedBooks) {
         this.borrowedBooks = borrowedBooks;
     }
+
+    @OneToMany(mappedBy = "book")
+    private Collection<Returned_Book> returnedBooks;
+
+    public Collection<Returned_Book> getReturnedBooks() {
+        return returnedBooks;
+    }
+
+    public void setReturnedBooks(Collection<Returned_Book> returnedBooks) {
+        this.returnedBooks = returnedBooks;
+    }
 }

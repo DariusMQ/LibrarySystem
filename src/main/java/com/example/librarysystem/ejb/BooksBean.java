@@ -3,6 +3,7 @@ package com.example.librarysystem.ejb;
 import com.example.librarysystem.common.BookDto;
 import com.example.librarysystem.entities.Book;
 import com.example.librarysystem.entities.Borrowed_Book;
+import com.example.librarysystem.entities.Returned_Book;
 import jakarta.ejb.EJBException;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
@@ -50,6 +51,12 @@ public class BooksBean {
                 ids.add(bbook.getId());
             }
 
+            List<Long> rids = new ArrayList<>();
+
+            for (Returned_Book rbook : book.getReturnedBooks()){
+                rids.add(rbook.getId());
+            }
+
             BookDto bookDto = new BookDto(book.getId(),
                     book.getTitle(),
                     book.getAuthor(),
@@ -58,7 +65,8 @@ public class BooksBean {
                     book.getQuantityAvailable(),
                     book.getPublishingDate(),
                     book.getLocation(),
-                    ids);
+                    ids,
+                    rids);  //I swear to christ if it doesn't work this time...
             BookDtos.add(bookDto);
         }
 

@@ -3,6 +3,7 @@ package com.example.librarysystem.ejb;
 import com.example.librarysystem.common.UserDto;
 import com.example.librarysystem.entities.Book;
 import com.example.librarysystem.entities.Borrowed_Book;
+import com.example.librarysystem.entities.Returned_Book;
 import com.example.librarysystem.entities.User;
 import jakarta.ejb.EJBException;
 import jakarta.ejb.Stateless;
@@ -49,7 +50,18 @@ public class UsersBean {
                 ids.add(bbook.getId());
             }
 
-            UserDto userDto = new UserDto(user.getId(),user.getUsername(),user.getPassword(),user.getEmail(),ids);
+            List<Long> rids = new ArrayList<>();
+
+            for (Returned_Book rbook : user.getReturnedBooks()){
+                rids.add(rbook.getId());
+            }
+
+            UserDto userDto = new UserDto(user.getId(),
+                    user.getUsername(),
+                    user.getPassword(),
+                    user.getEmail(),
+                    ids,
+                    rids);
 
             UserDtos.add(userDto);
         }

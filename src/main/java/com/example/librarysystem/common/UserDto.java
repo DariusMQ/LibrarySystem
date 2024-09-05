@@ -8,13 +8,21 @@ public class UserDto {
     String password;
     String email;
     List<Long> borrowedBooksIds;
+    List<Long> returnedBooksIds;
 
-    public UserDto(Long id, String username, String password, String email, List<Long> borrowedBooksIds) {
+    public UserDto(Long id,
+                   String username,
+                   String password,
+                   String email,
+                   List<Long> borrowedBooksIds,
+                   List<Long> returnedBooksIds)
+    {
         this.id = id;
         this.username = username;
         this.password = password;
         this.email = email;
         this.borrowedBooksIds = borrowedBooksIds;
+        this.returnedBooksIds = returnedBooksIds;
     }
 
     public Long getId() {
@@ -35,5 +43,9 @@ public class UserDto {
 
     public List<Long> getBorrowedBooksIds() {
         return borrowedBooksIds;
+    }
+
+    public List<Long> getReturnedBooksIds() {
+        return returnedBooksIds;
     }
 }

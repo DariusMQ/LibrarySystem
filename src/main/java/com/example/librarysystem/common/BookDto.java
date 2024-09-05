@@ -17,6 +17,7 @@ public class BookDto {
      LocalDate publishingDate;
      String location;
      List<Long> borrowedBooksIds;
+     List<Long> returnedBooksIds;
 
     public BookDto(Long id,
                    String title,
@@ -26,7 +27,8 @@ public class BookDto {
                    Long quantityAvailable,
                    LocalDate publishingDate,
                    String location,
-                   List<Long> borrowedBooksIds)
+                   List<Long> borrowedBooksIds,
+                   List<Long> returnedBooksIds)
     {
         this.id = id;
         this.title = title;
@@ -37,6 +39,7 @@ public class BookDto {
         this.publishingDate = publishingDate;
         this.location = location;
         this.borrowedBooksIds = borrowedBooksIds;
+        this.returnedBooksIds = returnedBooksIds;
     }
 
     public Long getId() {
@@ -73,5 +76,9 @@ public class BookDto {
 
     public List<Long> getBorrowedBooksIds() {
         return borrowedBooksIds;
+    }
+
+    public List<Long> getReturnedBooksIds() {
+        return returnedBooksIds;
     }
 }

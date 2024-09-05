@@ -35,6 +35,13 @@
                             Borrowed</a>
                     </li>
 
+                    <li>
+                        <a class="nav-link
+                        ${pageContext.request.requestURI.substring(pageContext.request.requestURI.lastIndexOf
+("/")) eq '/returnedbooks.jsp' ? ' active' : ''}" aria-current="page" href="${pageContext.request.contextPath}/Returned_Books">
+                            Returned</a>
+                    </li>
+
                 </ul>
             </div>
 
