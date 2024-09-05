@@ -9,9 +9,10 @@ import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
-@DeclareRoles({"READ_BOOKS","WRITE_BOOKS"})
+@DeclareRoles({"WRITE_BOOKS"})
 @ServletSecurity(value = @HttpConstraint(rolesAllowed = {"READ_BOOKS"}),
         httpMethodConstraints = {@HttpMethodConstraint(value = "POST", rolesAllowed =
                 {"WRITE_BOOKS"})})
@@ -24,8 +25,12 @@ public class Books extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<BookDto> books = booksBean.findAllBooks();
+        List<BookDto> unavailableBooks = new ArrayList<>(books);
+        booksBean.removeUnavailableBooks(books);
+        booksBean.removeAvailableBooks(unavailableBooks);
+
         request.setAttribute("books",books);
-        request.setAttribute("numberOfBooks",books.size());
+        request.setAttribute("unavailablebooks",unavailableBooks);
         request.getRequestDispatcher("/WEB-INF/pages/books.jsp").forward(request,response);
     }
 

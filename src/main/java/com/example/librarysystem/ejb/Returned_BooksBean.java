@@ -1,19 +1,32 @@
 package com.example.librarysystem.ejb;
 
+import com.example.librarysystem.common.BookDto;
+import com.example.librarysystem.common.Borrowed_BookDto;
 import com.example.librarysystem.common.Returned_BookDto;
+import com.example.librarysystem.entities.Book;
+import com.example.librarysystem.entities.Borrowed_Book;
 import com.example.librarysystem.entities.Returned_Book;
+import com.example.librarysystem.entities.User;
 import jakarta.ejb.EJBException;
 import jakarta.ejb.Stateless;
+import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
 @Stateless
 public class Returned_BooksBean {
+
+    @Inject
+    Borrowed_BooksBean borrowedBooksBean;
+    @Inject
+    BooksBean booksBean;
+
     public static final Logger LOG = Logger.getLogger(Returned_BooksBean.class.getName());
 
     @PersistenceContext
@@ -53,6 +66,27 @@ public class Returned_BooksBean {
         }
 
         return Returned_BookDtos;
+    }
+
+    public void returnBook(Long borrowed_BookId){
+        LOG.info("returnBook");
+
+        Borrowed_Book borrowed_Book = entityManager.find(Borrowed_Book.class,borrowed_BookId);
+
+        Book book = entityManager.find(Book.class,borrowed_Book.getBook().getId());
+        book.setQuantityAvailable(book.getQuantityAvailable()+1);
+
+        User user = entityManager.find(User.class,borrowed_Book.getBorrower().getId());
+
+        Returned_Book returnedBook = new Returned_Book();
+        returnedBook.setBorrowDate(borrowed_Book.getBorrowDate());
+        returnedBook.setToBeReturnedDate(borrowed_Book.getToBeReturnedDate());
+        returnedBook.setReturnDate(LocalDate.now());
+        returnedBook.setBook(book);
+        returnedBook.setBorrower(user);
+
+        entityManager.persist(returnedBook);
+        entityManager.remove(borrowed_Book);
     }
 
 }

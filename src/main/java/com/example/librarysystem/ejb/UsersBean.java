@@ -1,6 +1,7 @@
 package com.example.librarysystem.ejb;
 
 import com.example.librarysystem.common.BookDto;
+import com.example.librarysystem.common.Borrowed_BookDto;
 import com.example.librarysystem.common.UserDto;
 import com.example.librarysystem.entities.*;
 import jakarta.ejb.EJBException;
@@ -20,6 +21,9 @@ public class UsersBean {
 
     @Inject
     PasswordBean passwordBean;
+
+    @Inject
+    Borrowed_BooksBean borrowedBooksBean;
 
     public static final Logger LOG = Logger.getLogger(UsersBean.class.getName());
 
@@ -79,6 +83,7 @@ public class UsersBean {
         newUser.setEmail(email);
         newUser.setPassword(passwordBean.convertToSha256(password));
         entityManager.persist(newUser);
+
         assignGroupsToUser(username, groups);
     }
     private void assignGroupsToUser(String username, Collection<String> groups) {
@@ -117,6 +122,15 @@ public class UsersBean {
         return null;
     }
 
+    public UserDto findUserByUsername(String username){
+        for(UserDto userDto: findAllUsers()){
+            if(username.equals(userDto.getUsername())){
+                return userDto;
+            }
+        }
+        return null;
+    }
+
     public void updateUser(Long userId,
                            String username,
                            String email,
@@ -130,6 +144,31 @@ public class UsersBean {
         if(!password.isBlank())
         user.setPassword(passwordBean.convertToSha256(password));
         removeGroupsFromUser(user.getUsername());
+
         assignGroupsToUser(user.getUsername(),groups);
+    }
+
+    public void updateUser(Long userId,
+                           String username,
+                           String email,
+                           String password){
+        LOG.info("updateUser");
+
+        User user = entityManager.find(User.class,userId);
+        user.setUsername(username);
+        user.setEmail(email);
+        if(!password.isBlank())
+            user.setPassword(passwordBean.convertToSha256(password));
+        removeGroupsFromUser(user.getUsername());
+    }
+
+    public List<Borrowed_BookDto> getUserBorrowedBooks(String username){
+        List<Borrowed_BookDto> borrowed_Books = borrowedBooksBean.findAllBorrowedBooks();
+        List<Borrowed_BookDto> result = new ArrayList<>();
+        for(Borrowed_BookDto book: borrowed_Books){
+            if(book.getBorrowerUsername()==username)
+            result.add(book);
+        }
+        return result;
     }
 }

@@ -103,7 +103,6 @@ public class BooksBean {
         entityManager.persist(book);
     }
 
-
     public BookDto findBookById(Long bookId) {
         for(BookDto bookDto:  findAllBooks()){
             if(bookId.equals(bookDto.getId()))
@@ -165,5 +164,25 @@ public class BooksBean {
         BookPhoto photo = photos.get(0); // the first element
         return new BookPhotoDto(photo.getId(), photo.getFilename(), photo.getFileType(),
                 photo.getFileContent());
+    }
+
+    public void removeUnavailableBooks(List<BookDto> books){
+        List<BookDto> toBeRemoved = new ArrayList<>();
+        for (BookDto book: books){
+            if(book.getQuantityAvailable()==0){
+                toBeRemoved.add(book);
+            }
+        }
+        books.removeAll(toBeRemoved);
+    }
+
+    public void removeAvailableBooks(List<BookDto> books){
+        List<BookDto> toBeRemoved = new ArrayList<>();
+        for (BookDto book: books){
+            if(book.getQuantityAvailable()!=0){
+                toBeRemoved.add(book);
+            }
+        }
+        books.removeAll(toBeRemoved);
     }
 }

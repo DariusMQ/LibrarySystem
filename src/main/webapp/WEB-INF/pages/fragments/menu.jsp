@@ -17,14 +17,24 @@
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav">
 
-                    <b:if test="${pageContext.request.isUserInRole('READ_BOOKS')}">
+                    <b:if test="${pageContext.request.isUserInRole('READ_PROFILE')}">
+                        <li>
+                            <a class="nav-link
+                        ${pageContext.request.requestURI.substring(pageContext.request.requestURI.lastIndexOf
+("/")) eq '/profile.jsp' ? ' active' : ''}" aria-current="page" href="${pageContext.request.contextPath}/Profile">
+                                Profile
+                            </a>
+                        </li>
+                    </b:if>
+
+
                         <li>
                             <a class="nav-link
                         ${pageContext.request.requestURI.substring(pageContext.request.requestURI.lastIndexOf
 ("/")) eq '/books.jsp' ? ' active' : ''}" aria-current="page" href="${pageContext.request.contextPath}/Books">
                                 Books</a>
                         </li>
-                    </b:if>
+
 
                     <b:if test="${pageContext.request.isUserInRole('READ_USERS')}">
                         <li>
